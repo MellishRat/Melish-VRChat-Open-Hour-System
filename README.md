@@ -1,143 +1,272 @@
 # Melish's VRChat Open Hour System
 
-A lightweight **UdonSharp open-hours controller** for VRChat worlds.
+A flexible UdonSharp scheduling system for VRChat worlds that automatically enables or disables objects, teleports, areas, lights, materials, sounds, and status displays based on configurable days of the week and opening hours.
 
-Originally made for **Melish's Goon Cave Club**, where parts of the world can open, close, change status displays, play sounds, alter lights, and show a countdown based on scheduled opening hours.
+Designed for:
 
-## Target setup
+* Unity 2022.3.22f1 or newer
+* VRChat SDK 3.10.4+
+* UdonSharp
 
-- Unity `2022.3.22f1`
-- VRChat World SDK `3.10.4`
-- UdonSharp
+---
 
-This is an unofficial community tool and is not affiliated with VRChat Inc.
+## Features
 
-## What it does
+✅ Enable or disable GameObjects automatically
 
-`MellishOpenHoursController.cs` can:
+✅ Separate Open and Closed object lists
 
-- Show objects while open
-- Show different objects while closed
-- Update a UI `Text` status label
-- Use separate open/closed text colours
-- Show an optional countdown until the next opening time
-- Play an opening sound once when opening
-- Play a closing sound once when closing
-- Change an optional status light colour
-- Optionally enable the light only while open
-- Check selected days of the week
-- Use a configurable reference time zone instead of being locked to GMT
-- Handle overnight opening hours, such as `22:00` to `02:00`
-- Treat matching open/close times as an all-day opening for enabled days
-- Display optional debug information
+✅ Open / Closed status text display
 
-## Example uses
+✅ Custom Open and Closed text colours
 
-- Nightclub open/closed sign
-- Beach mode that only appears on certain days
-- Pool night setup
-- VIP room schedule
-- Event room open hours
-- Seasonal or themed prop toggles
-- Status lights for doors, signs, or entrance areas
-- Countdown display for upcoming events
+✅ Countdown timer until opening or closing
 
-## Installation
+✅ Optional display of the next opening day and time
 
-1. Create or open a Unity project using Unity `2022.3.22f1`.
-2. Install the VRChat World SDK and UdonSharp.
-3. Copy the folder `Assets/MelishOpenHoursSystem` into your Unity project's `Assets` folder.
-4. Add `MellishOpenHoursController` to a GameObject in your scene.
-5. Assign your open objects, closed objects, status text, countdown text, audio source, sounds, and optional light.
-6. Set your reference time zone, opening time, closing time, and open days.
+✅ Opening and closing sound effects
 
-## Reference time zone
+✅ Status light colour changes
 
-The script uses `Networking.GetNetworkDateTime()` as its stable base time, then applies your chosen reference time zone offset.
+✅ Optional light enable/disable when open
+
+✅ Mesh material swapping for visual indicators
+
+✅ Configurable time zone offsets
+
+✅ Day-of-week scheduling
+
+✅ Overnight schedules supported (example: 22:00 → 02:00)
+
+✅ Debug display for testing and troubleshooting
+
+---
+
+## Example Uses
+
+### Teleport Access Control
+
+Enable a teleport only during specific opening hours.
 
 Examples:
 
-- UTC / GMT: `0 hours`, `0 minutes`
-- UK summer / BST: `1 hour`, `0 minutes`
-- Japan / JST: `9 hours`, `0 minutes`
-- US Eastern winter / EST: `-5 hours`, `0 minutes`
-- US Eastern summer / EDT: `-4 hours`, `0 minutes`
-- US Pacific winter / PST: `-8 hours`, `0 minutes`
-- US Pacific summer / PDT: `-7 hours`, `0 minutes`
-- India / IST: `5 hours`, `30 minutes`
+* Beach access
+* VIP rooms
+* Event areas
+* Seasonal attractions
 
-VRChat/Udon does not automatically know your intended real-world daylight saving rules, so set the offset you want your world schedule to follow.
+When closed:
 
-## Countdown display
+* Teleport is disabled
+* Indicator shows CLOSED
+* Light turns red
 
-Assign a UI `Text` object to **Countdown Text** to show the time until the next enabled opening period.
+When open:
 
-Default example:
+* Teleport becomes available
+* Indicator shows OPEN
+* Light turns green
+
+---
+
+### Seasonal Areas
+
+Enable entire sections of a world based on schedules.
+
+Examples:
+
+* Christmas village
+* Halloween zone
+* Summer beach
+* Winter resort
+
+---
+
+### Mini-Games and Activities
+
+Automatically schedule activities.
+
+Examples:
+
+* Pool party
+* Bouncy castle
+* Whack-a-mole arena
+* Dance floor events
+
+---
+
+### Clubs and Venues
+
+Perfect for nightclub-style worlds.
+
+Examples:
+
+* Main dance floor
+* DJ booth
+* Bar areas
+* VIP lounges
+
+---
+
+### Public / Private Areas
+
+Control access to:
+
+* Staff rooms
+* Maintenance areas
+* Event stages
+* Private islands
+* Special buildings
+
+---
+
+## Included Example Prefab
+
+The package includes a demonstration prefab showing a complete setup.
+
+The example demonstrates:
+
+* Open / Closed status display
+* Countdown timer
+* Debug information
+* Light colour switching
+* Material swapping
+* Scheduled object activation
+
+The included example uses two door handles:
+
+* Open Handle
+* Closed Handle
+
+These are purely examples.
+
+In a real world you would typically replace them with:
+
+* Teleport triggers
+* Udon interaction buttons
+* Entire rooms
+* Buildings
+* Islands
+* Attractions
+* Mini-games
+* Any GameObject that should appear, disappear, or become accessible on a schedule
+
+---
+
+## Time Zone Support
+
+Schedules are not restricted to GMT.
+
+A configurable UTC offset allows creators to schedule using their preferred local time zone.
+
+Examples:
+
+| Location    | UTC Offset |
+| ----------- | ---------- |
+| UK (Winter) | UTC+00:00  |
+| Germany     | UTC+01:00  |
+| Japan       | UTC+09:00  |
+| US Eastern  | UTC-05:00  |
+| US Central  | UTC-06:00  |
+| US Pacific  | UTC-08:00  |
+
+---
+
+## Countdown Display
+
+The optional countdown display can show:
+
+### While Closed
 
 ```text
-Opens in 48h 00m
+CLOSED
+
+Next Opening:
+Thursday 00:00 UTC+00:00
+
+Opens In:
+48h 12m
 ```
 
-You can choose between:
+### While Open
 
-- Total hours and minutes, such as `51h 20m`
-- Days, hours and minutes, such as `2d 03h 20m`
+```text
+OPEN
 
-When the area is already open, the countdown can show `Open now` or be hidden.
+Closes In:
+3h 45m
+```
 
-## Overnight hours
+---
 
-Overnight ranges are supported.
+## Setup
 
-Example:
+### 1. Import the Package
 
-- Opening: `22:00`
-- Closing: `02:00`
-- Friday enabled
+Import the prefab and scripts into your Unity project.
 
-This means the system opens on **Friday at 22:00 reference time** and stays open until **Saturday at 02:00 reference time**.
+### 2. Add the Controller
 
-You do not need to enable Saturday unless you also want a separate Saturday opening period.
+Add the **MellishOpenHoursController** component to any GameObject.
 
-## Inspector guide
+### 3. Configure Objects
 
-### Objects To Toggle
+Add GameObjects to:
 
-- **Objects Visible When Open**: enabled while the schedule is open.
-- **Objects Visible When Closed**: enabled while the schedule is closed.
+* Objects Visible When Open
+* Objects Visible When Closed
 
-### Status Display
+### 4. Configure Schedule
 
-- Optional UI Text label.
-- Custom open/closed messages.
-- Custom open/closed colours.
+Set:
 
-### Countdown Display
+* Opening Hour
+* Opening Minute
+* Closing Hour
+* Closing Minute
 
-- Optional UI Text label for the next opening countdown.
-- Custom prefix, open message, and no-upcoming-opening message.
-- Toggle between total-hours format and days/hours/minutes format.
+Choose which days are enabled.
 
-### Audio Cues
+### 5. Optional Features
 
-- Optional AudioSource.
-- Opening and closing sounds play only when the state changes.
-- First-load sound can be enabled or disabled.
+Assign:
 
-### Status Light
+* Status Text
+* Countdown Text
+* Audio Source
+* Open / Close Sounds
+* Status Light
+* Mesh Renderer
+* Open / Closed Materials
+* Debug Text
 
-- Optional Unity Light.
-- Can change colour based on state.
-- Can either stay enabled or only turn on while open.
+---
 
-### Reference Time Zone
+## Performance
 
-Set the schedule's friendly time zone label and UTC offset. This lets the world author choose whether the schedule follows UK time, US time, Japan time, server time, or any other fixed offset.
+The controller does not update every frame.
 
-### Update Settings
+By default it refreshes once every 60 seconds, making it suitable for large worlds with multiple scheduled areas.
 
-The default check interval is `60` seconds. That is usually enough for world open/closed logic and avoids unnecessary constant checks.
+---
 
 ## License
 
-MIT License. See `LICENSE`.
+MIT License
+
+Free to use, modify, redistribute, and include in both public and private VRChat worlds.
+
+---
+
+## Credits
+
+Created by Mellish
+
+Website:
+https://www.mellishpenthouse.com
+
+GitHub:
+https://github.com/MellishRat
+
+VRChat Community:
+https://www.mellishpenthouse.com
