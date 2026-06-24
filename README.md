@@ -40,6 +40,43 @@ Designed for:
 
 ✅ Debug display for testing and troubleshooting
 
+## Screenshots
+
+### Example Open Hours Setup
+
+![Open Hours System Example](Screenshot.png)
+
+Example scene showing the Open Hours System controlling object visibility, status displays, indicators, and scheduled access.
+
+This demonstration uses simple door handles to represent open and closed states, but in a real VRChat world these would typically be teleports, event areas, attractions, mini-games, doors, stages, or entire sections of a world.
+
+---
+
+### Inspector Configuration
+
+![Open Hours System Inspector](Inspector%20screenshot.png)
+
+The Open Hours System is configured entirely through the Unity Inspector.
+
+No coding is required.
+
+Available configuration options include:
+
+- Opening and closing times
+- Day-of-week scheduling
+- Open and closed object lists
+- Countdown displays
+- Status text displays
+- Open and closed colours
+- Audio notifications
+- Status lights
+- Material swapping
+- Time zone offsets
+- Debug information
+- Update intervals
+
+This makes it easy to create scheduled events, attractions, and access controls directly from the Unity Editor.
+
 ---
 
 ## Example Uses
@@ -258,15 +295,14 @@ Free to use, modify, redistribute, and include in both public and private VRChat
 
 ---
 
-## Credits
+## Support the Project
 
-Created by Mellish
+This project is provided free of charge and open source.
 
-Website:
-https://www.mellishpenthouse.com
+If you'd like to support future VRChat tools, world systems, shaders, utilities, and community projects, consider supporting me on Patreon:
 
-GitHub:
-https://github.com/MellishRat
+➡️ https://www.patreon.com/Mellish_Penthouse
 
-VRChat Community:
-https://www.mellishpenthouse.com
+Your support helps fund hosting costs, development time, software licenses, and future open-source releases.
+
+Thank you for supporting independent VRChat development.
